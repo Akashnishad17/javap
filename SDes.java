@@ -35,6 +35,14 @@ class SDes{
 		return arr;
 	}
 
+	public static void print(int[] arr)
+	{
+		for(int x : arr)
+			System.out.print(x);
+
+		System.out.println();
+	}
+
 	public static void solve(Scanner sc)
 	{
 		String k = sc.next();
@@ -49,7 +57,11 @@ class SDes{
 		for(int i = 0; i < 8; i++)
 			ip_out[i] = res[ip[i] - 1];
 
+		System.out.println("Encryption:\nAfter Ip");
+		print(ip_out);
+
 		//round 1 
+		System.out.println("Round 1:");
 		res = encrypt(ip_out, key1);
 		
 		//apply SW
@@ -60,11 +72,16 @@ class SDes{
 			res[i] = res[i+4];
 			res[i+4] = temp;
 		}
+
+		System.out.println("After SW");
+		print(res);
 		
 		//round 2
+		System.out.println("Round 2:");
 		res = encrypt(res, key2);
 
 		// apply IP-1
+		System.out.println("After ip-1 -> final output");
 		for(int i = 0; i < 8; i++)
 			System.out.print(res[ip_1[i]-1]);
 
@@ -73,13 +90,22 @@ class SDes{
 
 	public static int[] encrypt(int[] s, int[] k)
 	{
+		System.out.println("Input for the round:");
+		print(s);
+
 		//apply ep with second part and xor with key
 		int[] ep_out = new int[8];
 		for(int i = 0; i < 8; i++)
 			ep_out[i] = s[ep[i]-1 + 4];
 
+		System.out.println("After ep on second part");
+		print(ep_out);
+
 		for(int i = 0; i < 8; i++)
 			ep_out[i] ^= k[i];
+
+		System.out.println("After xor with key");
+		print(ep_out);
 
 		// apply S0 and S1
 		int[] s_0 = getRowColumn(ep_out, 0, 3);
@@ -96,19 +122,31 @@ class SDes{
 		y /= 2;
 		s_out[2] = y%2;
 
+		System.out.println("After applying S-box");
+		print(s_out);
+
 		// apply p4 and xor with s first part
 		int[] p4_out = new int[4];
 		for(int i = 0; i < 4; i++)
 			p4_out[i] = s_out[p4[i] - 1];
 
+		System.out.println("After p4");
+		print(p4_out);
+
 		for(int i = 0; i < 4; i++)
 			p4_out[i] ^= s[i];
+
+		System.out.println("After xor with first part");
+		print(p4_out);
 
 		int[] res = new int[8];
 		for(int i = 0; i < 4; i++)
 			res[i] = p4_out[i];
 		for(int i = 4; i < 8; i++)
 			res[i] = s[i];
+
+		System.out.println("After adding 2nd part");
+		print(res);
 
 		return res;
 	}
@@ -126,13 +164,22 @@ class SDes{
 		for(int i = 0; i < 10; i++)
 			p10_out[i] = key[p10[i]-1];
 
+		System.out.println("key Generation:\nAfter p10");
+		print(p10_out);
+
 		//LS-1 
 		rotateLeft(p10_out, 0, 4);
 		rotateLeft(p10_out, 5, 9);
 
+		System.out.println("After LS-1");
+		print(p10_out);
+
 		//apply p8 -> key1
 		for(int i = 0; i < 8; i++)
 			key1[i] = p10_out[p8[i]-1];
+
+		System.out.println("After p8 -> key1");
+		print(key1);
 
 		//LS-2
 		//shifting two bits 
@@ -141,9 +188,15 @@ class SDes{
 		rotateLeft(p10_out, 0, 4);
 		rotateLeft(p10_out, 5, 9);
 
+		System.out.println("After LS-2");
+		print(p10_out);
+
 		//apply p8 -> key2
 		for(int i = 0; i < 8; i++)
 			key2[i] = p10_out[p8[i]-1];
+
+		System.out.println("After p8 -> key2");
+		print(key2);
 	}
 
 	public static void rotateLeft(int[] arr, int left, int right)

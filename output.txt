@@ -1,3 +1,7 @@
--582343998
-8
--94074476
+n: 221.0
+phi: 192.0
+e: 5.0
+d: 0.2
+Plain Text: 23.0
+Encrypted message: 160.0
+Decrypted message: 23.0

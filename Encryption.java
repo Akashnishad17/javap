@@ -1,6 +1,7 @@
 import java.util.*;
 import java.io.*;
 class Encryption{
+	//caeser chiper
 	static String encrypt(String str, int key)
 	{
 		String res = "";

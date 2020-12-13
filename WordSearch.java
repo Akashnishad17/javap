@@ -73,7 +73,6 @@ class WordSearch{
         {
             out.add(next.word);
             next.word = null;
-        
         }
         
         board[row][col] = '.';
