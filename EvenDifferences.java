@@ -1,10 +1,26 @@
 import java.io.*;
 import java.util.*;
 
-class Template{
-	public static void solve(BufferedReader br) throws Exception
+class EvenDifferences{
+
+	public static int solve(BufferedReader br) throws Exception
 	{
-		
+		int n = Integer.parseInt(br.readLine());
+		int x, even = 0, odd = 0;
+
+		String[] st = br.readLine().split(" ");
+
+		for(int i = 0; i < n; i++)
+		{
+			x = Integer.parseInt(st[i]);
+
+			if(x % 2 == 0)
+				even++;
+			else
+				odd++;
+		}
+
+		return Math.min(even, odd);
 	}
 
 	public static void main(String[] args) throws Exception

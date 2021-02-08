@@ -1,10 +1,19 @@
 import java.io.*;
 import java.util.*;
 
-class Template{
-	public static void solve(BufferedReader br) throws Exception
+class PairMe{
+	public static String solve(BufferedReader br) throws Exception
 	{
-		
+		String[] st = br.readLine().split(" ");
+
+		int x = Integer.parseInt(st[0]);
+		int y = Integer.parseInt(st[1]);
+		int z = Integer.parseInt(st[2]);
+
+		if(x + y == z || y + z == x || x + z == y)
+			return "YES";
+
+		return "NO";
 	}
 
 	public static void main(String[] args) throws Exception
