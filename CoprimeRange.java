@@ -1,11 +1,14 @@
 import java.io.*;
 import java.util.*;
 
-class Template{
-	public static void solve(BufferedReader br) throws Exception
+class CoprimeRange{
+	
+	public static int solve(BufferedReader br) throws Exception
 	{
-		
+		String s = br.readLine();
+		return 1000000007;
 	}
+
 	public static void main(String[] args) throws Exception
 	{
 		//BufferedReader br = new BufferedReader(new InputStreamReader(System.in));

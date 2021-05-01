@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-class XorSumsBackUp{
+class XorSumsBackUp2{
 
 	public static int mod = 998244353;
 
@@ -39,12 +39,13 @@ class XorSumsBackUp{
 			ones = bits[i];
 			zeroes = n - ones;
 
-			for(int j = 1; j <= ones; j += 2)
+			for(int m = 1; m <= n; m++)
 			{
-				temp = ncr(fact, ones, j);
-
-				for(int k = 0; k <= zeroes; k++)
-					dp[k+j] = (dp[k+j] + ((1 << i) * (temp * ncr(fact, zeroes, k)) % mod) % mod) % mod;
+				for(int r = 1; r <= ones && r <= m; r += 2)
+				{
+					if(m - r <= zeroes)
+						dp[m] = (dp[m] + ((1 << i) * (ncr(fact, ones, r) * ncr(fact, zeroes, m - r)) % mod) % mod) % mod; 
+				}
 			}
 		}
 

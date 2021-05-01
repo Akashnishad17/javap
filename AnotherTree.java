@@ -4,7 +4,7 @@ import java.util.*;
 class AnotherTree{
 
 	public static HashMap<Integer, List<Integer>> map = new HashMap<>();
-	public static List<Integer> child;
+	public static long[] lcm;
 	
 	public static void solve(BufferedReader br) throws Exception
 	{
@@ -17,10 +17,14 @@ class AnotherTree{
 		{
 			p = Integer.parseInt(st[i]);
 
-			child = map.getOrDefault(p, new ArrayList<>());
+			List<Integer> child = map.getOrDefault(p, new ArrayList<>());
 			child.add(i+2);
 			map.put(p, child);
 		}
+
+		lcm = new long[n+1];
+
+		dfsLCM(1);
 
 		int q = Integer.parseInt(br.readLine());
 		StringBuilder sb = new StringBuilder();
@@ -28,26 +32,54 @@ class AnotherTree{
 		while(q-- > 0)
 		{
 			st = br.readLine().split(" ");
-			sb.append(dfs(Integer.parseInt(st[0]), Integer.parseInt(st[1]))+"\n");
+			sb.append(dfs(Integer.parseInt(st[0]), Long.parseLong(st[1]))+"\n");
 		}
 
 		System.out.print(sb.toString());
 	}
 
-	public static int dfs(int node, int a)
+	public static long dfsLCM(int node)
+	{
+		if(!map.containsKey(node))
+			return lcm[node] = 1;
+
+		List<Integer> temp = map.get(node);
+
+		long lc = 1;
+		long t, gcd;
+
+		for(int c : temp)
+		{
+			t = dfsLCM(c);
+			gcd = gcd(t, lc);
+			lc = (t * lc) / gcd;
+		}
+
+		return lcm[node] = lc * temp.size();
+	}
+
+	public static long gcd(long a, long b)
+	{
+		return a == 0 ? b : gcd(b%a, a);
+	}
+
+	public static long dfs(int node, long a)
 	{
 		if(!map.containsKey(node))
 			return 0;
 
-		child = map.get(node);
+		if(a % lcm[node] == 0)
+			return 0;
 
-		if(a % child.size() != 0)
+		List<Integer> temp = map.get(node);
+
+		if(a % temp.size() != 0)
 			return a;
 
 		int count = 0;
 
-		for(int c : child)
-			count += dfs(c, a/child.size());
+		for(int c : temp)
+			count += dfs(c, a/temp.size());
 
 		return count;
 	}
@@ -60,3 +92,5 @@ class AnotherTree{
 		solve(br);
 	}
 }
+
+//https://www.hackerearth.com/challenges/competitive/dbs-campus-hack-2-hire-2021/
