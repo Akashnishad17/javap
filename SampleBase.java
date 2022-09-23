@@ -7,11 +7,16 @@ class SampleBase{
 	private static BufferedWriter bw;
 
 	private static String[] buffer;
-	private static int index; 
+	private static int index;
 
 	private static void before() throws Exception {
-		//online();
-		local();
+		try{
+			new BufferedReader(new FileReader("local.txt"));
+			local();
+		}catch(Exception e){
+			online();
+		}
+
 		buffer = new String[0];
 		index = 0;
 	}
@@ -122,12 +127,12 @@ class SampleBase{
 	}
 
 	public static void main(String[] args) throws Exception {
-		before();		
+		before();
 		solve();
 		after();
 	}
 
 	private static void solve() throws Exception {
-
+		
 	}
 }

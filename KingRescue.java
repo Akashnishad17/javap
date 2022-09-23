@@ -77,7 +77,7 @@ class KingRescue{
 			count++;
 		}
 
-		return count;
+		return -1;
 	}
 
 	public static void main(String[] args) throws Exception
