@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-class SampleBase{
+class ContructArray{
 
 	private static BufferedReader br;
 	private static BufferedWriter bw;
@@ -10,10 +10,12 @@ class SampleBase{
 	private static int index;
 
 	private static void before() throws Exception {
-		if(System.getProperty("ONLINE_JUDGE") == null)
+		try{
+			new BufferedReader(new FileReader("local.txt"));
 			local();
-		else
+		}catch(Exception e){
 			online();
+		}
 
 		buffer = new String[0];
 		index = 0;
@@ -131,6 +133,44 @@ class SampleBase{
 	}
 
 	private static void solve() throws Exception {
-		
+		int t = nextInt();
+
+		while(t-- > 0)
+		{
+			int n = nextInt();
+
+			if(n % 2 == 1)
+				println(-1);
+			else
+			{
+				int[] arr = new int[n];
+				arr[0] = 1;
+
+				int l = 1;
+				int r = n - 2;
+
+				while(l < r)
+				{
+					if(l % 2 == 0)
+					{
+						arr[l] = 1;
+						arr[r] = -1;
+					}
+					else
+					{
+						arr[l] = -1;
+						arr[r] = 1;
+					}
+
+					l++;
+					r--;
+				}
+
+				for(int x : arr)
+					print(x + " ");
+
+				println();
+			}
+		}
 	}
 }

@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-class SampleBase{
+class ZeroString{
 
 	private static BufferedReader br;
 	private static BufferedWriter bw;
@@ -10,10 +10,12 @@ class SampleBase{
 	private static int index;
 
 	private static void before() throws Exception {
-		if(System.getProperty("ONLINE_JUDGE") == null)
+		try{
+			new BufferedReader(new FileReader("local.txt"));
 			local();
-		else
+		}catch(Exception e){
 			online();
+		}
 
 		buffer = new String[0];
 		index = 0;
@@ -131,6 +133,29 @@ class SampleBase{
 	}
 
 	private static void solve() throws Exception {
-		
+		int t = nextInt();
+
+		while(t-- > 0)
+		{
+			int n = nextInt();
+
+			String s = next();
+
+			int one = 0, zero = 0;
+
+			for(char c : s.toCharArray())
+			{
+				if(c == '0')
+					zero++;
+				else
+					one++;
+			}
+
+
+			if(one == 0)
+				println(0);
+			else
+				println(Math.min(one, zero + 1));
+		}
 	}
 }

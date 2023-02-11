@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-class SampleBase{
+class MakeArrayOdd{
 
 	private static BufferedReader br;
 	private static BufferedWriter bw;
@@ -10,10 +10,12 @@ class SampleBase{
 	private static int index;
 
 	private static void before() throws Exception {
-		if(System.getProperty("ONLINE_JUDGE") == null)
+		try{
+			new BufferedReader(new FileReader("local.txt"));
 			local();
-		else
+		}catch(Exception e){
 			online();
+		}
 
 		buffer = new String[0];
 		index = 0;
@@ -131,6 +133,33 @@ class SampleBase{
 	}
 
 	private static void solve() throws Exception {
-		
+		int t = nextInt();
+
+		while(t-- > 0)
+		{
+			int n = nextInt();
+			int x = nextInt();
+
+			int[] arr = new int[n];
+
+			for(int i = 0; i < n; i++)
+				arr[i] = nextInt();
+
+			int even = 0;
+			boolean odd = false;
+
+			for(int y : arr)
+			{
+				if(y % 2 == 0)
+					even++;
+				else
+					odd = true;
+			}
+
+			if(x % 2 == 0)
+				println(odd ? even : -1);
+			else
+				println((even + 1) / 2);
+		}
 	}
 }

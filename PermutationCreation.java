@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-class SampleBase{
+class PermutationCreation{
 
 	private static BufferedReader br;
 	private static BufferedWriter bw;
@@ -10,10 +10,12 @@ class SampleBase{
 	private static int index;
 
 	private static void before() throws Exception {
-		if(System.getProperty("ONLINE_JUDGE") == null)
+		try{
+			new BufferedReader(new FileReader("local.txt"));
 			local();
-		else
+		}catch(Exception e){
 			online();
+		}
 
 		buffer = new String[0];
 		index = 0;
@@ -131,6 +133,23 @@ class SampleBase{
 	}
 
 	private static void solve() throws Exception {
-		
+		int t = nextInt();
+
+		while(t-- > 0)
+		{
+			int n = nextInt();
+
+			if(n <= 3)
+				println(-1);
+			else{
+				for(int i = 2; i <= n; i += 2)
+					print(i + " ");
+
+				for(int i = 1; i <= n; i += 2)
+					print(i + " ");
+
+				println();
+			}
+		}
 	}
 }

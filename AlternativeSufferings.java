@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-class SampleBase{
+class AlternativeSufferings{
 
 	private static BufferedReader br;
 	private static BufferedWriter bw;
@@ -10,10 +10,12 @@ class SampleBase{
 	private static int index;
 
 	private static void before() throws Exception {
-		if(System.getProperty("ONLINE_JUDGE") == null)
+		try{
+			new BufferedReader(new FileReader("local.txt"));
 			local();
-		else
+		}catch(Exception e){
 			online();
+		}
 
 		buffer = new String[0];
 		index = 0;
@@ -131,6 +133,87 @@ class SampleBase{
 	}
 
 	private static void solve() throws Exception {
-		
+		int t = nextInt();
+
+		while(t-- > 0)
+		{
+			int n = nextInt();
+			int k = nextInt();
+
+			String s = next();
+
+			int[] arr = new int[n];
+
+			for(int i = 0; i < n; i++)
+				arr[i] = s.charAt(i) - '0';
+
+			for(int i = 0; i < n; i++)
+			{
+				if(arr[i] == 1)
+					arr[i] = 3;
+				else if(arr[i] == 0)
+				{
+					if(i - 1 >= 0 && (arr[i - 1] == 3))
+						arr[i] = 1;
+					else if(i + 1 < n && (arr[i + 1] == 1))
+						arr[i] = 1;
+				}
+			}
+
+			for(int i = 0; i < n; i++)
+			{
+				if(arr[i] == 3)
+					arr[i] = 0;
+			}
+
+			k--;
+
+			int[] prefix = new int[n];
+			int[] suffix = new int[n];
+
+			Arrays.fill(prefix, -1);
+			Arrays.fill(suffix, -1);
+
+			for(int i = 0; i < n; i++)
+			{
+				if(arr[i] == 1)
+					prefix[i] = 0;
+				else if(i - 1 >= 0 && prefix[i - 1] != -1)
+					prefix[i] = prefix[i - 1] + 1;
+			}
+
+			for(int i = n - 1; i >= 0; i--)
+			{
+				if(arr[i] == 1)
+					suffix[i] = 0;
+				else if(i + 1 < n && suffix[i + 1] != -1)
+					suffix[i] = suffix[i + 1] + 1;
+			}
+
+			int[] dp = new int[n];
+
+			for(int i = 0; i < n; i++)
+			{
+				if(prefix[i] != -1 && suffix[i] != -1)
+					dp[i] = Math.min(prefix[i], suffix[i]);
+				else if(prefix[i] != -1)
+					dp[i] = prefix[i];
+				else
+					dp[i] = suffix[i];
+			}
+
+			for(int i = 0; i < n; i++)
+			{
+				if(arr[i] == 1 && k % 2 == 1)
+					arr[i] = 0;
+				else if(dp[i] != -1 && arr[i] == 0 && k >= dp[i] && (k - dp[i]) % 2 == 0)
+					arr[i] = 1;
+			}
+
+			for(int x : arr)
+				print(x);
+
+			println();
+		}
 	}
 }

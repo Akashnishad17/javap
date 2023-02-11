@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-class SampleBase{
+class ConfusingConcatenations{
 
 	private static BufferedReader br;
 	private static BufferedWriter bw;
@@ -10,10 +10,12 @@ class SampleBase{
 	private static int index;
 
 	private static void before() throws Exception {
-		if(System.getProperty("ONLINE_JUDGE") == null)
+		try{
+			new BufferedReader(new FileReader("local.txt"));
 			local();
-		else
+		}catch(Exception e){
 			online();
+		}
 
 		buffer = new String[0];
 		index = 0;
@@ -131,6 +133,47 @@ class SampleBase{
 	}
 
 	private static void solve() throws Exception {
-		
+		int t = nextInt();
+
+		while(t-- > 0)
+		{
+			int n = nextInt();
+
+			int[] arr = new int[n];
+
+			for(int i = 0; i < n; i++)
+				arr[i] = nextInt();
+
+			int max = Integer.MIN_VALUE;
+			int index = -1;
+
+			for(int i = 0; i < n; i++)
+			{
+				if(arr[i] > max)
+				{
+					max = arr[i];
+					index = i;
+				}
+			}
+
+			if(index == 0)
+				println(-1);
+			else
+			{
+				println(index);
+
+				for(int i = 0; i < index; i++)
+					print(arr[i] + " ");
+
+				println();
+
+				println(n - index);
+
+				for(int i = index; i < n; i++)
+					print(arr[i] + " ");
+
+				println();
+			}
+		}
 	}
 }

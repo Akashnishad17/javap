@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-class SampleBase{
+class SuspenseString{
 
 	private static BufferedReader br;
 	private static BufferedWriter bw;
@@ -10,10 +10,12 @@ class SampleBase{
 	private static int index;
 
 	private static void before() throws Exception {
-		if(System.getProperty("ONLINE_JUDGE") == null)
+		try{
+			new BufferedReader(new FileReader("local.txt"));
 			local();
-		else
+		}catch(Exception e){
 			online();
+		}
 
 		buffer = new String[0];
 		index = 0;
@@ -131,6 +133,43 @@ class SampleBase{
 	}
 
 	private static void solve() throws Exception {
-		
+		int t = nextInt();
+
+		while(t-- > 0)
+		{
+			int n = nextInt();
+
+			String s = next();
+
+			StringBuilder sb = new StringBuilder();
+
+			int l = 0, r = n - 1;
+
+			boolean flag = true;
+
+			while(l <= r)
+			{
+				if(flag)
+				{
+					if(s.charAt(l) == '1')
+						sb.append(1);
+					else
+						sb.insert(0, 0);
+					l++;
+				}
+				else
+				{
+					if(s.charAt(r) == '1')
+						sb.insert(0, 1);
+					else
+						sb.append(0);
+					r--;
+				}
+
+				flag = !flag;
+			}
+
+			println(sb.toString());
+		}
 	}
 }

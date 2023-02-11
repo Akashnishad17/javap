@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-class SampleBase{
+class EquivalentNumbers{
 
 	private static BufferedReader br;
 	private static BufferedWriter bw;
@@ -10,10 +10,12 @@ class SampleBase{
 	private static int index;
 
 	private static void before() throws Exception {
-		if(System.getProperty("ONLINE_JUDGE") == null)
+		try{
+			new BufferedReader(new FileReader("local.txt"));
 			local();
-		else
+		}catch(Exception e){
 			online();
+		}
 
 		buffer = new String[0];
 		index = 0;
@@ -131,6 +133,24 @@ class SampleBase{
 	}
 
 	private static void solve() throws Exception {
-		
+		int t = nextInt();
+
+		while(t-- > 0)
+		{
+			int a = nextInt();
+			int b = nextInt();
+
+			int gcd = gcd(a, b);
+
+			while(gcd != 1 && a % gcd == 0) a /= gcd;
+			while(gcd != 1 && b % gcd == 0) b /= gcd;
+
+			println(a == 1 && b == 1 ? "YES" : "NO");
+		}
+	}
+
+	private static int gcd(int a, int b)
+	{
+		return a == 0 ? b : gcd(b % a, a);
 	}
 }

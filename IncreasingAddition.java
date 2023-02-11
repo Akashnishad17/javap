@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-class SampleBase{
+class IncreasingAddition{
 
 	private static BufferedReader br;
 	private static BufferedWriter bw;
@@ -10,10 +10,12 @@ class SampleBase{
 	private static int index;
 
 	private static void before() throws Exception {
-		if(System.getProperty("ONLINE_JUDGE") == null)
+		try{
+			new BufferedReader(new FileReader("local.txt"));
 			local();
-		else
+		}catch(Exception e){
 			online();
+		}
 
 		buffer = new String[0];
 		index = 0;
@@ -131,6 +133,66 @@ class SampleBase{
 	}
 
 	private static void solve() throws Exception {
-		
+		int t = nextInt();
+
+		while(t-- > 0)
+		{
+			int n = nextInt();
+			int q = nextInt();
+
+			long[] arr = new long[n];
+
+			for(int i = 0; i < n; i++)
+				arr[i] = nextLong();
+
+			TreeMap<Long, Integer> map = new TreeMap<>();
+
+			for(int i = 0; i < n - 1; i++)
+			{
+				if(arr[i] > arr[i + 1])
+				{
+					long diff = arr[i] - arr[i + 1];
+					map.put(diff, map.getOrDefault(diff, 0) + 1);
+				}
+			}
+
+			while(q-- > 0)
+			{
+				int index = nextInt() - 1;
+				long x = nextLong();
+
+				if(index > 0 && arr[index - 1] - arr[index] > 0)
+					remove(arr[index - 1] - arr[index], map);
+
+				if(index < n - 1 && arr[index] - arr[index + 1] > 0)
+					remove(arr[index] - arr[index + 1], map);
+
+				arr[index] = x;
+
+				if(index > 0 && arr[index - 1] - arr[index] > 0)
+					add(arr[index - 1] - arr[index], map);
+
+				if(index < n - 1 && arr[index] - arr[index + 1] > 0)
+					add(arr[index] - arr[index + 1], map);
+
+
+				if(map.size() > 0)
+					println(map.lastKey());
+				else
+					println(0);
+			}
+		}
+	}
+
+
+	private static void remove(long val, TreeMap<Long, Integer> map){
+		map.put(val, map.get(val) - 1);
+
+		if((int)map.get(val) == 0)
+			map.remove(val);
+	}
+
+	private static void add(long val, TreeMap<Long, Integer> map){
+		map.put(val, map.getOrDefault(val, 0) + 1);
 	}
 }

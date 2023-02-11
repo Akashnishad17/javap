@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-class SampleBase{
+class MaximumSubarray{
 
 	private static BufferedReader br;
 	private static BufferedWriter bw;
@@ -10,10 +10,12 @@ class SampleBase{
 	private static int index;
 
 	private static void before() throws Exception {
-		if(System.getProperty("ONLINE_JUDGE") == null)
+		try{
+			new BufferedReader(new FileReader("local.txt"));
 			local();
-		else
+		}catch(Exception e){
 			online();
+		}
 
 		buffer = new String[0];
 		index = 0;
@@ -131,6 +133,63 @@ class SampleBase{
 	}
 
 	private static void solve() throws Exception {
-		
+		int t = nextInt();
+
+		while(t-- > 0)
+		{
+			int n = nextInt();
+
+			long[] a = new long[n + 2];
+
+			for(int i = 0; i < n; i++)
+				a[i + 1] = nextLong();
+
+			int m = nextInt();
+
+			long[] b = new long[m];
+
+			for(int i = 0; i < m; i++)
+				b[i] = nextLong();
+
+			long minNeg = Long.MIN_VALUE;
+			long posSum = 0;
+
+			for(int i = 0; i < m; i++)
+			{
+				if(b[i] > 0)
+					posSum += b[i];
+				else
+					minNeg = Math.max(minNeg, b[i]);
+			}
+
+			if(posSum == 0)
+				posSum = minNeg;
+
+			a[0] = posSum; 
+			a[n+1] = posSum;
+
+			long max1 = maxSum(a, 0, n);
+			long max2 = maxSum(a, 1, n + 1);
+
+			println(Math.max(max1, max2));
+		}
+	}
+
+	private static long maxSum(long[] arr, int l, int r){
+		long max = Long.MIN_VALUE;
+		long sum = 0;
+
+		for(int i = l; i <= r; i++)
+		{
+			sum += arr[i];
+
+			if(sum > max)
+				max = sum;
+
+			if(sum < 0)
+				sum = 0;
+		}
+
+		return max;
 	}
 }

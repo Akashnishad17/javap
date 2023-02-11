@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-class SampleBase{
+class AddToSubsequence{
 
 	private static BufferedReader br;
 	private static BufferedWriter bw;
@@ -10,10 +10,12 @@ class SampleBase{
 	private static int index;
 
 	private static void before() throws Exception {
-		if(System.getProperty("ONLINE_JUDGE") == null)
+		try{
+			new BufferedReader(new FileReader("local.txt"));
 			local();
-		else
+		}catch(Exception e){
 			online();
+		}
 
 		buffer = new String[0];
 		index = 0;
@@ -131,6 +133,28 @@ class SampleBase{
 	}
 
 	private static void solve() throws Exception {
-		
+		int t = nextInt();
+
+		while(t-- > 0)
+		{
+			int n = nextInt();
+
+			int[] arr = new int[n];
+
+			for(int i = 0; i < n; i++)
+				arr[i] = nextInt();
+
+			HashMap<Integer, Integer> map = new HashMap<>();
+
+			for(int x : arr)
+				map.put(x, map.getOrDefault(x, 0) + 1);
+
+			int max = 0;
+
+			for(int x : map.values())
+				max = Math.max(max, x);
+
+			println(max - 1);
+		}
 	}
 }
